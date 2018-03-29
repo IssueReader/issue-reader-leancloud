@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "express": "^4.16.3",
+    "leancloud-storage": "^3.6.3",
+    "leanengine": "^3.1.0"
+  },
+  "scripts": {
+    "dev": "node server.js",
+    "lean": "lean up"
+  },
+  "engines": {
+    "node": "8.x"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1"
+  }
+}
