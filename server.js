@@ -1,6 +1,8 @@
 const express = require('express');
 const AV = require('leanengine');
 // const path = require('path');
+const bodyParser = require('body-parser');
+const multer = require('multer');
 
 
 AV.init({
@@ -12,6 +14,12 @@ AV.init({
 
 const app = express();
 app.use(AV.express());
+// app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+// app.use(multer()); // for parsing multipart/form-data
+
+// 可以将一类的路由单独保存在一个文件中
+app.use('/user', require('./routes/user'));
 
 app.get('/', function(req, res) {
   res.json({

@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 /.leancloud
+.vscode/
 
 # production
 
@@ -10,4 +11,4 @@
 # misc
 .DS_Store
 npm-debug.log*
-yarn-error.log
+*.log
