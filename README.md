@@ -23,13 +23,13 @@ yarn start
 
 ### Built With
 
-* lean: lean cloud [命令行工具](https://leancloud.cn/docs/leanengine_cli.html)
+* lean: leancloud [命令行工具](https://leancloud.cn/docs/leanengine_cli.html)
 
 ### Prerequisites
 
 1. 注册 leancloud 账号，创建应用
 
-2. 安装 lean cloud [命令行工具](https://leancloud.cn/docs/leanengine_cli.html)
+2. 安装 leancloud [命令行工具](https://leancloud.cn/docs/leanengine_cli.html)
 
 3. [创建 Github OAuth App](https://developer.github.com/apps/building-oauth-apps/creating-an-oauth-app/)
 
