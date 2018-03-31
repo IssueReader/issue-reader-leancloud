@@ -31,7 +31,7 @@ yarn start
 
 2. 安装 lean cloud [命令行工具](https://leancloud.cn/docs/leanengine_cli.html)
 
-3. [创建 Github OAuth App](https://developer.github.com/apps/building-oauth-apps/creating-an-oauth-app/)，确认要选中
+3. [创建 Github OAuth App](https://developer.github.com/apps/building-oauth-apps/creating-an-oauth-app/)
 
 <!-- ### Setting up Dev
 
