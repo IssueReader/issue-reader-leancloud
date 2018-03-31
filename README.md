@@ -2,9 +2,7 @@
 
 # issue-reader-leancloud
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)]
-<!-- [![Build Status](https://img.shields.io/travis/npm/npm/latest.svg?style=flat-square)](https://travis-ci.org/npm/npm)
-[![npm](https://img.shields.io/npm/v/npm.svg?style=flat-square)](https://www.npmjs.com/package/npm)  -->
+![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)
 
 > https://issuereader.leanapp.cn
 
@@ -27,9 +25,8 @@ yarn start
 
 * lean: lean cloud [命令行工具](https://leancloud.cn/docs/leanengine_cli.html)
 
-
 ### Prerequisites
-<!-- What is needed to set up the dev environment. For instance, global dependencies or any other tools. include download links. -->
+
 1. 注册 leancloud 账号，创建应用
 
 2. 安装 lean cloud [命令行工具](https://leancloud.cn/docs/leanengine_cli.html)
@@ -102,8 +99,6 @@ Explain your code style and show how to check it. -->
 
 ## Database
 
-<!-- Explaining what database (and version) has been used. Provide download links.
-Documents your database design and schemas, relations etc... -->
 [LeanStorage](https://leancloud.cn/docs/leanstorage_guide-js.html)
 
 ## Contributing
@@ -115,8 +110,3 @@ Documents your database design and schemas, relations etc... -->
 ## Licensing
 
 issue-reader-leancloud is [MIT licensed](./LICENSE).
-
-<!--
-## Github Oauth
-https://github.com/login/oauth/authorize?client_id=e3fcd5f1d9cfd0d5aaaa&redirect_uri=https%3A%2F%2Fissuereader.leanapp.cn&scope=repo&state=github
--->
