@@ -152,8 +152,9 @@ const getAccessToken = (code) => {
 };
 
 const login = async (req) => {
-  if (req.headers.sessiontoken) {
-    const user = await AV.User.become(req.headers.sessiontoken);
+  if (req.body.token) {
+    const user = await AV.User.become(req.body.token);
+    debugger;
     return {
       token: user.attributes.authData.github.access_token,
       sessionToken: user._sessionToken,
@@ -168,11 +169,11 @@ const login = async (req) => {
       token: token.access_token,
       sessionToken: user._sessionToken,
     };
-  } else if (req.body.token) {
+  } else if (req.body.accessToken) {
     // TODO: 测试分支
     const user = await AV.User.signUpOrlogInWithAuthData({
       uid: 'e3fcd5f1d9cfd0d5aaaa',
-      access_token: req.body.token,
+      access_token: req.body.accessToken,
     }, 'github');
     return {
       token: user.attributes.authData.github.access_token,
