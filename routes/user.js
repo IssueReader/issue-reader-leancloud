@@ -154,7 +154,6 @@ const getAccessToken = (code) => {
 const login = async (req) => {
   if (req.body.token) {
     const user = await AV.User.become(req.body.token);
-    debugger;
     return {
       token: user.attributes.authData.github.access_token,
       sessionToken: user._sessionToken,
