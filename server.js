@@ -14,8 +14,8 @@ AV.init({
 
 const app = express();
 app.use(AV.express());
-// app.use(bodyParser.json()); // for parsing application/json
-app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+app.use(bodyParser.json()); // for parsing application/json
+// app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 // app.use(multer()); // for parsing multipart/form-data
 
 app.use((req, res, next) => {
