@@ -143,11 +143,9 @@ const getAccessToken = (code) => {
     body: `client_id=e3fcd5f1d9cfd0d5aaaa&client_secret=369296e56f582e756cd00e097aef73b92744ddab&code=${code}&state=github`,
   }).then((resp) => {
     if (!resp.access_token) {
-      const error = new Error('');
-      // error.response = resp;
-      Object.assign(error, resp);
-      throw error;
+      throw resp;
     }
+    return resp;
   });
 };
 
@@ -179,9 +177,8 @@ const login = async (req) => {
       sessionToken: user._sessionToken,
     };
   } else {
-    const err = new Error('code/sessiontoken not found');
-    Object.assign(err, req);
-    throw err;
+    const errMsg = { error: 'code/sessiontoken not found' };
+    throw errMsg;
   }
 };
 
@@ -198,10 +195,7 @@ const getUserInfo = ({ token }) => {
     }`,
   }).then((resp) => {
     if (!resp.data || !resp.data.viewer) {
-      const error = new Error('');
-      // error.response = resp;
-      Object.assign(error, resp);
-      throw error;
+      throw resp;
     }
     return resp.data.viewer;
   });
@@ -226,9 +220,8 @@ const getUserByReq = async (req) => {
     const user = await AV.User.become(req.headers.sessiontoken);
     return user;
   }
-  const error = new Error('sessiontoken not found');
-  Object.assign(error, req);
-  throw error;
+  const errMsg = { error: 'sessiontoken not found' };
+  throw errMsg;
 };
 
 
@@ -326,10 +319,7 @@ const getRepoIssues = ({ client, owner, repo }) => {
     }`,
   }).then((resp) => {
     if (!resp.data || !resp.data.repository || !resp.data.user || !resp.data.repository.issues) {
-      const error = new Error('');
-      // error.response = resp;
-      Object.assign(error, resp);
-      throw error;
+      throw resp;
     }
     return { owner: resp.data.user, issues: resp.data.repository.issues.edges };
   });
