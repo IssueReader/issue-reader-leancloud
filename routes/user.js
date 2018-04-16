@@ -133,6 +133,16 @@ router.delete('/favorites', async (req, res) => {
   }
 });
 
+router.get('/watching', async (req, res) => {
+  try {
+    const user = await getUserByReq(req);
+    const repos = await getWatching({ token: user.attributes.authData.github.access_token, ...req.query });
+    return res.json(repos);
+  } catch (err) {
+    return res.status(401).json(err);
+  }
+});
+
 const getAccessToken = (code) => {
   return requset('https://github.com/login/oauth/access_token', {
     method: 'POST',
@@ -412,6 +422,72 @@ const addFavorites = async ({
   issue.set('repo', repo);
   issue.set('number', parseInt(number, 10));
   return issue.save();
+};
+
+const getWatching = ({ token }) => {
+  const client = getClient({ token });
+  return getUserWatchingList({ client, list: [] });
+};
+
+const getUserWatchingList = async ({ client, list, cursor }) => {
+  const result = await queryUserWatching({ client, cursor });
+  const watchingList = list.concat(result.list);
+  if (watchingList.length < result.totalCount) {
+    const all = await getUserWatchingList({ client, list: watchingList, cursor: result[result.length - 1].cursor });
+    return all;
+  }
+  return watchingList;
+};
+
+const queryUserWatching = ({ client, cursor }) => {
+  return client.query({
+    query: gql`query {
+      viewer {
+        watching (first: 100${cursor ? `, after: "${cursor}"` : ''}){
+          totalCount
+          edges{
+            cursor
+            node{
+              owner {
+                login
+                avatarUrl
+              }
+              name
+              issues (states:OPEN){
+                totalCount
+              }
+              stargazers {
+                totalCount
+              }
+              watchers{
+                totalCount
+              }
+            }
+          }
+        }
+      }
+    }`,
+  }).then((resp) => {
+    if (!resp.data || !resp.data.viewer || !resp.data.viewer.watching) {
+      throw resp;
+    }
+    // const watching = resp.data.viewer.watching;
+    const { totalCount, edges } = resp.data.viewer.watching;
+    return {
+      totalCount,
+      list: edges.map((it) => {
+        return {
+          cursor: it.cursor,
+          owner: it.node.owner.login,
+          avatarUrl: it.node.owner.avatarUrl,
+          name: it.node.name,
+          issueCount: it.node.issues.totalCount,
+          starCount: it.node.stargazers.totalCount,
+          watchCount: it.node.watchers.totalCount,
+        };
+      }),
+    };
+  });
 };
 
 module.exports = router;
