@@ -30,14 +30,14 @@ router.get('/repos', async (req, res) => {
 });
 
 // DONE: 添加订阅
-router.post('/repos/:owner/:repo', async (req, res) => {
+router.post('/repos', async (req, res) => {
   try {
     const user = await getUserByReq(req);
-    const repoObj = await getRepo({ userId: user.id, ...req.params });
+    const repoObj = await getRepo({ userId: user.id, ...req.body });
     if (repoObj) {
       return res.json(repoObj);
     }
-    const newRepoObj = await addRepo({ userId: user.id, ...req.params });
+    const newRepoObj = await addRepo({ userId: user.id, ...req.body });
     return res.json(newRepoObj);
   } catch (err) {
     return res.status(401).json(err);
@@ -45,10 +45,10 @@ router.post('/repos/:owner/:repo', async (req, res) => {
 });
 
 // DONE: 删除订阅
-router.delete('/repos/:owner/:repo', async (req, res) => {
+router.delete('/repos', async (req, res) => {
   try {
     const user = await getUserByReq(req);
-    const repoObj = await getRepo({ userId: user.id, ...req.params });
+    const repoObj = await getRepo({ userId: user.id, ...req.body });
     if (repoObj) {
       await repoObj.destroy();
       return res.json(repoObj);
