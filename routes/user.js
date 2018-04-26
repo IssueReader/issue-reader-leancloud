@@ -332,6 +332,8 @@ const getRepoIssuesList = async ({
       read: !!read,
       favorite: !!favorite,
     };
+  }).sort((a, b) => {
+    return new Date(b.createdAt) - new Date(a.createdAt);
   });
   // return [].concat(...list).sort((a, b) => {
   //   return new Date(b.createdAt) - new Date(a.createdAt);
