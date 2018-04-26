@@ -76,8 +76,9 @@ router.get('/issues', async (req, res) => {
 router.get('/repos/:owner/:repo/issues', async (req, res) => {
   try {
     const user = await getUserByReq(req);
-    const repos = await getRepos({ userId: user.id });
-    return res.json(repos);
+    // const repos = await getRepos({ userId: user.id });
+    const issues = await getRepoIssuesList({ userId: user.id, token: user.attributes.authData.github.access_token, ...req.params });
+    return res.json(issues);
   } catch (err) {
     return res.status(401).json(err);
   }
@@ -303,6 +304,38 @@ const getIssues = async ({ userId, token }) => {
   return [].concat(...list).sort((a, b) => {
     return new Date(b.createdAt) - new Date(a.createdAt);
   });
+};
+
+
+const getRepoIssuesList = async ({
+  userId, token, owner, repo,
+}) => {
+  // const repos = await getRepos({ userId });
+  const client = getClient({ token });
+  const info = await getRepoIssues({ client, owner, repo });
+  const readIssues = await getReadIssues({ userId });
+  const favorites = await getFavorites({ userId });
+  return info.issues.map((issue) => {
+    // DONE: read/favorite 状态
+    const equalTo = (item) => {
+      return (issue.node.number === item.attributes.number &&
+        owner === item.attributes.owner &&
+        repo === item.attributes.repo);
+    };
+    const read = readIssues.find(equalTo);
+    const favorite = favorites.find(equalTo);
+    return {
+      ...issue.node,
+      ...info.owner,
+      owner,
+      repo,
+      read: !!read,
+      favorite: !!favorite,
+    };
+  });
+  // return [].concat(...list).sort((a, b) => {
+  //   return new Date(b.createdAt) - new Date(a.createdAt);
+  // });
 };
 
 const getRepoIssues = ({ client, owner, repo }) => {
