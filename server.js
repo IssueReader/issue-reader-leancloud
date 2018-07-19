@@ -26,6 +26,7 @@ app.use((req, res, next) => {
 });
 
 // 可以将一类的路由单独保存在一个文件中
+app.use('/login', require('./routes/login'));
 app.use('/user', require('./routes/user'));
 
 app.get('/', (req, res) => {
